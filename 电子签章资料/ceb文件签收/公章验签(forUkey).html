@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>验签ceb上公�?/TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+
+
+
+<script language="javaScript">
+function StampVerifySign()  	
+{
+	
+ 
+	var strCEBFileName = CEBFileName.value;
+	 
+  var objStampInfo = new ActiveXObject("StampCEBAux.StampInfo");
+	var nStampNum =""
+
+	var lRet1 = objStampInfo.GetStampNums(strCEBFileName,nStampNum);
+	 alert (lRet1) ;
+	if (lRet1 != 0) 
+	{
+		alert ("ceb中查询公章信息失�?) ;
+		return;
+	}
+
+   alert (nStampNum);
+
+	if (nStampNum = 0) 
+		{alert ("ceb中没有公�?);
+		 return;
+		}
+	
+  else
+   {  
+   	  var certsvr = "http://32.16.2.181/CertServer/interfaces/QueryCert.aspx";
+   	  
+   	  var objCebSign = new ActiveXObject("StampCEBAux.CebSign");
+			var lRet2 = objCebSign.VerifyAllAffixSign(strCEBFileName, certsvr) ;
+			alert (lRet2);
+			if (lRet2 != 0)
+			 {
+					alert (objCebSign.GetErrorMessage());
+				}	
+			else
+				{
+						alert("公文验签成功");
+				}
+	
+   }
+	
+}
+</script>
+
+
+<BODY>
+<center>
+<BR>
+<BR>
+<BR>
+请选择需要验签的CEB文件�?INPUT TYPE="File" size="45" NAME="CEBFileName">
+
+<BR>
+<INPUT TYPE="BUTTON" NAME= "PrintCmdButton" VALUE="验签" onclick = "StampVerifySign()">

@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>Document Title</TITLE>
+</HEAD>
+
+<BODY>
+<CENTER>
+<P>
+</P>
+
+
+<script language="javascript">
+	
+function makerceb()
+{
+var objMakercom ;
+var objMakercom = new ActiveXObject("MakerCom.MakerExt");
+
+    	var nRet1,nRet2,nRet3,nRet4;
+    	var  docname =  document.all("docfilename").value;
+			var names = docname.split(".");
+	
+	//判断是否有文件
+	if (docname.length == 0) 
+		{
+    	alert("请选择文件！");
+  	}
+  else
+    {		
+    	//判断是否为doc或wps文件	
+    	 if (names.length <2 || names[names.length -1].toUpperCase() != "DOC") 
+    		{
+         alert("请选择正确的需要转换的文件格式！");
+        }
+      else
+      	{
+    		
+	         //1' 打开Maker
+ 
+				nRet1 = objMakercom.BeginMaker("");
+				if (nRet1 !=0 )
+	       {
+	       	var gem1 = objMakercom.GetErrorMessage(nRet1);
+					alert (gem1);
+		     }
+
+
+				// alert ("打开maker成功" );
+
+  			 //2'  单文件转化
+  			 
+        nRet2 = objMakercom.SingleFileConvert(docname,"c:\\maker.ceb","最佳质量","c:\\maker.ini","c:\\maker.ini");
+		alert (nRet2);
+    if (nRet2 !=0)
+				{
+	       	var gem2 = objMakercom.GetErrorMessage(nRet2);
+					alert (gem2);
+		     }
+
+    		// alert ("转换完成");
+
+   			//3'  关闭maker
+   
+		
+			nRet3 = objMakercom.EndMaker();
+	  		if (nRet3 !=0)
+				{
+	       	var gem3 = objMakercom.GetErrorMessage(nRet3);
+					alert (gem3);
+		     }
+
+    
+	
+   window.open ("c:\\maker.ceb");
+
+  
+ 				 }
+		}
+
+}
+
+</SCRIPT>
+
+<h1>
+测试 MakerCom 控件
+
+</h1>
+
+<TABLE>
+	
+	<tr>
+		<td width="200" align="right">选择文件：</td>
+		<td width="409"  colspan="2"> 
+		<input	name="docfilename" 
+				type=file  style="LEFT: 75px; TOP: 0px; WIDTH: 300px; HEIGHT: 18px" >
+		*
+		</td>    
+	</tr>
+</TABLE>
+
+
+<INPUT TYPE=BUTTON NAME= "cmdButton1" VALUE = "转化成CEB"  onclick = "makerceb()">
+<P>
+
+
+
+</CENTER>
+
+</BODY>
+</HTML>

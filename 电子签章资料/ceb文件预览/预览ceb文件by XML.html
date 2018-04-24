@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<TITLE>预览</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+
+<script language="javascript">
+
+function PreviewCebXml()
+{
+	var strErrMessage, lRet, strCEBFileUrl, ctrlXml, verReader, left, right, top, bottom;
+	var opUINavigation, opUISelect, opUISaveAs;
+	var opUIFile, opUIZoom, opUILayout;
+	var opPluginAttachment, opPluginForm, opPluginVisualStamp, opPluginAnnot;
+
+	var verReader = "3304";
+
+
+
+	
+	 strErrMessage = "";
+	 strCEBFileUrl ="";
+	//strCEBFileUrl = "http://localhost/TestWeb/WebForm1.aspx";
+   var strlocalcebfile = "c://2.ceb";
+
+	ctrlXml = "<?xml version='1.0' encoding='GB2312'?><CPreviewCEBParam><PreviewCEBParamXMLVer></PreviewCEBParamXMLVer>" ;
+	ctrlXml += "<ApabiReaderVer>" + verReader + "</ApabiReaderVer>";
+	ctrlXml += "<CEBURL>" + strCEBFileUrl + "</CEBURL>";      //预览服务器端文件时传�?
+	ctrlXml += "<CEBEncypted>0<CEBEncypted>";                 //ceb文件是否加密,1表示�?0表示�?
+	ctrlXml += "<CEBFileID></CEBFileID>";                      
+	ctrlXml += "<CEBFilePathAndName>" + strlocalcebfile + "</CEBFilePathAndName>";  //预览本地文件时传�?
+	ctrlXml += "<Left>0</Left>";       //<!-- 打开reader左边框位�?-->
+	ctrlXml += "<Right>1</Right>";    //<!-- 打开reader后边框位�?-->
+	ctrlXml += "<Top>0</Top>";          //<!-- 打开reader上边框位�?-->
+	ctrlXml += "<Bottom>1</Bottom>";  //<!-- 打开reader下边框位�?-->
+	ctrlXml += "<ReaderPlugInVisualStamp>0</ReaderPlugInVisualStamp>"; //<!-- 是否显示盖章按钮:1表示显示;0表示不显�?->
+	ctrlXml += "<ReaderPlugInForm>0</ReaderPlugInForm>";        			//<!-- 是否显示打印按钮,此参数暂时无�?-->
+	ctrlXml += "<ReaderPlugInAttachment>0</ReaderPlugInAttachment>";  //<!-- 是否显示附件按钮,此参数暂时无�?-->
+	ctrlXml += "<ReaderPlugInAnnotator>1</ReaderPlugInAnnotator>";   //<!-- 是否显示注释按钮 -->
+	ctrlXml += "<ReaderEmbeddingUIFile>0</ReaderEmbeddingUIFile>";   //<!-- 是否显示File工具�?-->
+	ctrlXml += "<ReaderEmbeddingUINavigation>1</ReaderEmbeddingUINavigation>";  //<!-- 是否显示Navigation工具�?-->
+	ctrlXml += "<ReaderEmbeddingUISelect>1</ReaderEmbeddingUISelect>";     //<!-- 是否显示Select工具�?-->
+	ctrlXml += "<ReaderEmbeddingUILayout>1</ReaderEmbeddingUILayout>";     //<!-- 是否显示Layout(分页显示)工具�?-->
+	ctrlXml += "<ReaderEmbeddingUISaveAs>1</ReaderEmbeddingUISaveAs>";     //<!-- 是否显示SaveAs工具�?此参数暂时无�?-->
+	ctrlXml += "<ReaderEmbeddingUIZoom>1</ReaderEmbeddingUIZoom>";         //<!-- 是否显示Zoom工具�?-->
+	ctrlXml += "</CPreviewCEBParam>" ;
+	
+	//alert (ctrlXml);
+	
+	var  objSealStampCom  = new ActiveXObject("SealStampComSvr.SealStampCom");
+
+	// 预览ceb文件by xml字符�?
+	lRet = objSealStampCom.PreviewCEBByXML("", ctrlXml);
+	
+}
+function PreviewUrlCebXml()
+{
+	var strErrMessage, lRet, strCEBFileUrl, ctrlXml, verReader, left, right, top, bottom;
+	var opUINavigation, opUISelect, opUISaveAs;
+	var opUIFile, opUIZoom, opUILayout;
+	var opPluginAttachment, opPluginForm, opPluginVisualStamp, opPluginAnnot;
+
+	var verReader = 2143;
+
+
+	  strErrMessage = "";
+	  
+	  
+	  strCEBFileUrl ="";
+  	strCEBFileUrl = "http://localhost/1/1.ceb";
+	
+		strlocalcebfile="";
+  // var strlocalcebfile = "c://1.ceb";
+
+	ctrlXml = "<?xml version='1.0' encoding='GB2312'?><CPreviewCEBParam><PreviewCEBParamXMLVer></PreviewCEBParamXMLVer>" ;
+	ctrlXml += "<ApabiReaderVer>" + verReader + "</ApabiReaderVer>";
+	ctrlXml += "<CEBURL>" + strCEBFileUrl + "</CEBURL>";      //预览服务器端文件时传�?
+	ctrlXml += "<CEBEncypted>0<CEBEncypted>";                 //ceb文件是否加密,1表示�?0表示�?
+	ctrlXml += "<CEBFileID></CEBFileID>";                      
+	ctrlXml += "<CEBFilePathAndName>" + strlocalcebfile + "</CEBFilePathAndName>";  //预览本地文件时传�?
+	ctrlXml += "<Left>0</Left>";       //<!-- 打开reader左边框位�?-->
+	ctrlXml += "<Right>1</Right>";    //<!-- 打开reader后边框位�?-->
+	ctrlXml += "<Top>0</Top>";          //<!-- 打开reader上边框位�?-->
+	ctrlXml += "<Bottom>1</Bottom>";  //<!-- 打开reader下边框位�?-->
+	ctrlXml += "<ReaderPlugInVisualStamp>0</ReaderPlugInVisualStamp>"; //<!-- 是否显示盖章按钮:1表示显示;0表示不显�?->
+	ctrlXml += "<ReaderPlugInForm>1</ReaderPlugInForm>";        			//<!-- 是否显示打印按钮,此参数暂时无�?-->
+	ctrlXml += "<ReaderPlugInAttachment>1</ReaderPlugInAttachment>";  //<!-- 是否显示附件按钮,此参数暂时无�?-->
+	ctrlXml += "<ReaderPlugInAnnotator>1</ReaderPlugInAnnotator>";   //<!-- 是否显示注释按钮 -->
+	ctrlXml += "<ReaderEmbeddingUIFile>0</ReaderEmbeddingUIFile>";   //<!-- 是否显示File工具�?-->
+	ctrlXml += "<ReaderEmbeddingUINavigation>1</ReaderEmbeddingUINavigation>";  //<!-- 是否显示Navigation工具�?-->
+	ctrlXml += "<ReaderEmbeddingUISelect>1/ReaderEmbeddingUISelect>";     //<!-- 是否显示Select工具�?-->
+	ctrlXml += "<ReaderEmbeddingUILayout>1</ReaderEmbeddingUILayout>";     //<!-- 是否显示Layout(分页显示)工具�?-->
+	ctrlXml += "<ReaderEmbeddingUISaveAs>1</ReaderEmbeddingUISaveAs>";     //<!-- 是否显示SaveAs工具�?此参数暂时无�?-->
+	ctrlXml += "<ReaderEmbeddingUIZoom>1</ReaderEmbeddingUIZoom>";         //<!-- 是否显示Zoom工具�?-->
+	ctrlXml += "</CPreviewCEBParam>" ;
+	
+	//alert (ctrlXml);
+	
+	var  objSealStampCom  = new ActiveXObject("SealStampComSvr.SealStampCom");
+
+	// 预览ceb文件by xml字符�?
+	lRet = objSealStampCom.PreviewCEBByXML("", ctrlXml);
+	
+}
+
+</script>
+
+<center> 
+
+&nbsp;&nbsp;&nbsp;&nbsp预览ceb文件�?
+<BR>
+<BR>
+<BR>
+<INPUT TYPE="BUTTON" NAME= "Preview" VALUE="预览本地文件" onclick = "PreviewCebXml()">
+<BR>
+<BR>
+<INPUT TYPE="BUTTON" NAME= "Preview" VALUE="预览服务器上ceb文件" onclick = "PreviewUrlCebXml()">
+<BR>
+
+<BR>
+</center>
+</BODY>
+</HTML>

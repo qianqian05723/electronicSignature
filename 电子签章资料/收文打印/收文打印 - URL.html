@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>Document Title</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<P>
+</P>
+
+<SCRIPT language="javascript">
+function autoprint()
+{
+
+	var objautoprint,department, ret,file,printtype,serverip;
+
+        serverip = "192.168.112.235";
+
+	file = "http://" + serverip + "/stampserver/test.ceb";
+
+	department =  "";
+
+    // 收文打印参数
+	 printtype =  "http://" + serverip + "/stampserver/extend/interfaces/ReceivePrint.aspx";    
+
+	// 如果是发文打印, 	printtype =  "http://" + serverip + "/stampserver/SendPrint.asp";
+	
+	ret = 0;
+	
+	objautoprint = new ActiveXObject("AutoPrintsvr.AutoPrint");
+	
+
+	
+	ret = objautoprint.VisualPrintCEB(file,department, printtype);
+	
+	
+}
+function print()
+{
+
+	var objautoprint,department, ret,file,printtype,serverip;
+
+	serverip = "192.168.112.235";
+
+	file = "http://" + serverip + "/stampserver/test.ceb";
+
+	department =  "";
+
+    // 收文打印参数
+	 printtype =  "http://" + serverip + "/stampserver/extend/interfaces/ReceivePrint.aspx";    
+
+	// 如果是发文打印, 	printtype =  "http://" + serverip + "/stampserver/SendPrint.asp";
+	
+	ret = 0;
+	
+	objautoprint = new ActiveXObject("AutoPrintsvr.AutoPrint");
+	
+
+	
+	ret = objautoprint.AutoPrintCEB(file,department, 100,printtype);
+	
+	
+}
+</SCRIPT>
+
+<h1>
+本地收文打印
+</h1>
+<TABLE>
+	
+	<tr>
+		<td width="200" align="right">选择文件：</td>
+		<td width="409"  colspan="2"> 
+		<input	name="Filename" 
+				type=file id="Filename" style="LEFT: 75px; TOP: 0px; WIDTH: 300px; HEIGHT: 18px" >
+		*
+		</td>    
+	</tr>
+</TABLE>
+<P>
+<INPUT TYPE=BUTTON NAME= "cmdButton1" VALUE = "可视化收文打印"  onclick = "autoprint()">
+<P>
+<P>
+<INPUT TYPE=BUTTON NAME= "cmdButton1" VALUE = "后台收文打印"  onclick = "print()">
+<P>
+</CENTER>
+
+</BODY>
+</HTML>

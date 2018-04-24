@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>Document Title</TITLE>
+</HEAD>
+<BODY>
+
+
+<CENTER>&nbsp;</CENTER>
+<SCRIPT  LANGUAGE=javaScript>
+
+	//此函数用于检验必填项是否为空,长度是否超长,发文字号和公文标题是否重复
+	function visualstampclient() 
+{
+
+
+    //封装意源Ukey组件JszwUsbkey.dll的UkeyAux.dll组件 取到Ukey中信息
+    var objUsbKeyAux  = new ActiveXObject("UKeyAux.IJszwUsbKey");
+    var certinfo = "";
+        certinfo = objUsbKeyAux.GetSignCertInfoInKey();   
+     
+      //从xml格式字符串中取到certid列的值,然后拼出盖章时需要的字符串strAuxInfo
+	var unitDoc = new ActiveXObject("Msxml2.DOMDocument");
+		unitDoc.async = false;
+		unitDoc.loadXML(certinfo);
+		unitDoc.setProperty("SelectionLanguage", "XPath"); 
+    var oRst = unitDoc.selectSingleNode("//CertInfo/CertID");
+    var certid = oRst.text;
+      
+    var strAuxInfo = ""
+        strAuxInfo += "<AffixSign><SignType>1</SignType><CertID>"
+        strAuxInfo += certid
+        strAuxInfo += "</CertID><LDAPProxySvr>http://192.168.112.117/CertServer/interfaces/QueryCert.aspx</LDAPProxySvr></AffixSign><DeviceStyle>5</DeviceStyle>"
+    
+	var AffixRegisterURL,PrintURL,serverip,cebname,dept,nRet,varRetXml;
+	var objStampClientTool = new ActiveXObject("StampClientTool.StampTool");
+
+    serverip = "192.168.112.117"  ;
+	AffixRegisterURL = "http://" + serverip + "/StampServer/interfaces/background/AffixRegister.aspx" ;
+    PrintURL = " http://" + serverip + "/StampServer/extend/interfaces/printerror.aspx" ;
+	cebname = CebFileName.value;
+	dept = DeptName.value;
+		    
+		    
+	//采用原来U盘形式的本地化盖章
+	//nRet = objStampClientTool.LocalSealStamp(cebname,dept,AffixRegisterURL,PrintURL);
+         
+    //采用意源Ukey进行盖章操作
+    lRet = objStampClientTool.LocalSealStampEx2(cebname, dept, AffixRegisterURL, PrintURL, strAuxInfo, varRetXml)
+        
+}
+
+</SCRIPT>
+
+<CENTER>
+
+<h2>可视化盖章（CEB部署在客户端上） 
+</h2></CENTER>
+<CENTER>
+<tr>
+		<td width="200" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+选择CEB文件：</td>&nbsp;&nbsp;
+		<td width="409"  colspan="2"> 
+		<input	 
+				name="CebFileName" type=file id="CebFileName" style="LEFT: 75px; WIDTH: 400px; TOP: 0px; HEIGHT: 18px"> * </CENTER>
+<CENTER></TD></TR>
+	
+		<td width="200" align="right">盖章部门：
+		</td>
+		<td width="409"  colspan="2"> 
+		 <input	  name="DeptName"  id="DeptName" value="" style="WIDTH: 139px; HEIGHT: 22px" size=17>
+		</td></CENTER>
+		<CENTER></TD></TR>
+<CENTER>&nbsp;</CENTER>
+<CENTER><INPUT id=visualstampclient type=button value=调可视化盖章  onclick="visualstampclient()"></CENTER>
+
+</BODY>
+</HTML>

@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>Document Title</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<P>
+</P>
+
+<SCRIPT language="javascript">
+
+function print()
+{
+
+	var objautoprint,department, ret,file,printtype,serverip;
+
+	file = Filename.value;
+	department =  "南京市委测试";
+
+	
+
+	serverip = "192.168.0.8";
+
+    // 收文打印参数
+	 printtype =  "http://" + serverip + "/stampserver/extend/interfaces/PrintNumProc.aspx";
+
+
+    //盖章文件打印都传此参数
+	  printstamptype =  "http://" + serverip + "/stampserver/extend/interfaces/SendPrint.aspx";    
+
+
+	 var cebname = "c:\\01.ceb" ;
+
+
+var		xmlprint = "<?xml version=\"1.0\" encoding=\"GB2312\" ?>" ;
+		xmlprint += "<CAutoPrintCEBParam>"  ;
+        xmlprint += "<CEBURL></CEBURL>"     ;            //  <!--  网络上CEB的URL，如果使用此url，CEBFilePathAndName必须为空 -->
+        xmlprint += "<CEBFilePathAndName>" + cebname + "</CEBFilePathAndName>";  // <!—-本地CEB的路径 -->
+        xmlprint += "<PrintNumURL>" + printtype + "</PrintNumURL>"    ;   //  <!-- 验证打印份数URL，如果此项不为空，则先从该地址验证打印份数 -->
+        xmlprint += "<PrintStampURL>" + printstamptype + "</PrintStampURL>" ;// <!-- 验证公章URL，如果用了PrintNumURL则只能用SendPrint.aspx否则会重复扣份数 -->
+		xmlprint += "<UnitName>" + department+ "</UnitName>"         ;                       //  <!--  单位名称 -->
+        xmlprint += "<DeviceStyle></DeviceStyle> "    ;                            //  <!-- 设备类型 1表示U盘 -->
+        xmlprint += "<CheckUnitID></CheckUnitID>"      ;                           //   <!-- 是否检查单位标识-->
+        xmlprint += "<PrintSerialText>234567865</PrintSerialText>"     ;                           //     <!-- 打印编号文本信息，如果不为空则输出打印编号，内容为该文本-->
+        xmlprint += "<PrintSerialType></PrintSerialType>"      ;                           //                    <!-- 打印编号样式类型，暂时没有用到-->
+		xmlprint += "<WithDKCard></WithDKCard>"          ;                                //    <!-- 默认必须没有值 -->
+        xmlprint += "<USEPrintDlg>1<USEPrintDlg>"        ;                               //   <!--  是否用打印机对话框选择打印机 -->
+        xmlprint += "<CheckPrinter></CheckPrinter>"      ;                         //   <!-- 检查打印机，目前适用于HP3800 -->
+        xmlprint += "<PrinterName> </PrinterName>" ;    // <!-- 打印机名称，USEPrintDlg不等1时有效 -->
+        xmlprint += "<PrinterDriverName> </PrinterDriverName>" ; //<!-- 打印机驱动名称，USEPrintDlg不等1时有效-->
+        xmlprint += "<PrintTotalCopies>1</PrintTotalCopies>";     // <!-- 打印份数，USEPrintDlg不等1时有效-->
+        xmlprint += "<PrintBgnPages>1</PrintBgnPages>";     // <!-- 打印起始页号，USEPrintDlg不等1时有效-->
+        xmlprint += "<PrintEndPages>2</PrintEndPages>";              //     <!-- 打印结束页号，USEPrintDlg不等1时有效--> 
+        xmlprint += "</CAutoPrintCEBParam>";
+
+		
+
+
+	// 如果是发文打印, 	printtype =  "http://" + serverip + "/stampserver/SendPrint.asp";
+	
+	 ret = 0;
+
+	 alert  (xmlprint);
+	
+    
+
+	objautoprint = new ActiveXObject("AutoPrintsvr.AutoPrint");
+	
+
+	
+	ret = objautoprint.AutoPrintByXML(xmlprint);
+	
+	
+}
+</SCRIPT>
+
+<h1>
+本地收文打印
+</h1>
+<TABLE>
+	
+	<tr>
+		<td width="200" align="right">选择文件：</td>
+		<td width="409"  colspan="2"> 
+		<input	name="Filename" 
+				type=file id="Filename" style="LEFT: 75px; TOP: 0px; WIDTH: 300px; HEIGHT: 18px" >
+		*
+		</td>    
+	</tr>
+</TABLE>
+
+<P>
+<INPUT TYPE=BUTTON NAME= "cmdButton1" VALUE = "后台收文打印"  onclick = "print()">
+<P>
+</CENTER>
+
+</BODY>
+</HTML>

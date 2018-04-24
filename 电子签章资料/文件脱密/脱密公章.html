@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>Document Title</TITLE>
+</HEAD>
+
+<BODY>
+<CENTER>
+<P>
+<!--OBJECT id=DetachStampImpl classid="clsid:813971A1-DD46-458B-88E4-5928C0887C16">
+</OBJECT-->
+</P>
+
+
+<script language="javascript">
+<!--
+
+ function Detachstamp()
+ {   	
+  var DetachStampImpl = new ActiveXObject("DetachStampSvr.DetachStamp");
+  
+	var  cebfile = CebFileName.value;
+	//alert (CebFileName.value);
+	//var nRet = DetachStampImpl.DetachSecret(cebfile);
+	//var nRet = DetachStampImpl.DetachDoc(cebfile,0);
+	var nRet = DetachStampImpl.DetachSecretEx(cebfile,255);
+	
+	if (nRet != 0)
+	{
+		alert("脱密失败");
+	}
+	
+	delete DetachStampImpl;
+
+	alert("脱密成功")	;
+
+
+}
+-->
+</SCRIPT>
+
+<h1>
+公章脱密
+
+</h1>
+
+
+<tr>
+		<td width="200" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+选择CEB文件：</td>&nbsp;&nbsp;
+		<td width="409"  colspan="2"> 
+		<input	 
+				name="CebFileName" type=file id="CebFileName" style="LEFT: 75px; WIDTH: 400px; TOP: 0px; HEIGHT: 18px"> * </CENTER>
+<CENTER></TD></TR>
+<P>
+<INPUT TYPE=BUTTON NAME= "Detach" VALUE = "脱密公章"  onclick = "Detachstamp()">
+<P>
+
+<P>
+
+<P>
+
+</CENTER>
+
+</BODY>
+</HTML>

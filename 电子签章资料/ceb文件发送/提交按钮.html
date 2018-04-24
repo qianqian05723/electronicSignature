@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Developer Studio">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+<TITLE>公章3.6系统代码示例</TITLE>
+<SCRIPT  LANGUAGE=javaScript>
+function tijiao()
+{   
+	var  cebname =  document.all("CebFileName").value;
+	var names = cebname.split(".");
+	
+	//判断是否有文件
+	if (cebname.length == 0) {
+    	alert("请选择文件！");
+  	}else{		
+    	//判断是否为ceb文件	
+    	 if (names.length <2 || names[names.length -1].toUpperCase() != "CEB"){
+          myform.submit();
+        }else{ 
+          //判断是否为盖章ceb文件.如是取得id,赋予strCebID ;不是就提交文件  
+          var objGetCEBID = new ActiveXObject("PrintURLChangeSvr.ChangePrintURL");
+          var    strCebID = objGetCEBID.ChangeURL(cebname, "");
+          var nErrorMsg = objGetCEBID.GetErrorMessage();
+          var StringObject = new String(nErrorMsg);
+          alert (StringObject);
+          if (StringObject != ("S_OK")){
+              myform.submit();
+           	}else{ 
+               	//拼装入库xml字符串    		
+               	var strXml = "";
+          			strXml += "<?xml version=\"1.0\" encoding=\"gb2312\" ?>"
+        			strXml += "<Doc>";
+            		strXml += "<DocumentID>"+strCebID+"</DocumentID>" ;
+            		strXml += "<Receivers>南京市委测试;测试单位2</Receivers><PrnNums>30;30</PrnNums><SendType>2</SendType><Count>2</Count>";
+            		strXml += "<Receivers>南京市委测试;测试单位2</Receivers><PrnNums>30;30</PrnNums><SendType>2</SendType><Count>2</Count>";
+            		strXml += "</Doc>";
+               
+                	//xml字符串生成本地xml文件,位置为c:\xml.xml  
+             		var objGetPrintXML  = new ActiveXObject("StampPubCom.StampPubFuncCom");
+             		var getxml = objGetPrintXML.BSTR2File(strXml,"c:\\xml.xml");
+                
+               		//份数入库
+                	var objAspCom  = new ActiveXObject("ASPCom.postrecv");
+                	var stampserverIP = "10.0.0.22";
+            	  	var xml2DBUrl = "http://" + stampserverIP + "/StampServer/extend/interfaces/PrintLic2DB.aspx" ;
+                	var sendxml = objAspCom.SendFile(xml2DBUrl,"c:\\xml.xml");
+                	if (sendxml != 200){
+            			var strsendxmlErrMessage = objAspCom.GetErrorMessage();
+            			alert("上载打印控制信息失败!调用组件返回值:" + sendxml + "失败原因:" + strsendxmlErrMessage );
+            	 	}else{
+            			//alert ("入库测试成功!");
+            				myform.submit();
+            	    }
+            }
+        }
+    }
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+
+ <form name="myform" method="post" action="c:/1.html">
+<CENTER>
+	<h2>从盖章ceb文件上取id、拼xml文件、并入库</h2>
+	<tr>
+			<td width="200" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 选择盖过章的ceb文件：</td>&nbsp;&nbsp;
+			<td width="409"  colspan="2"> 
+			<input name="CebFileName" type=file id="CebFileName" style="LEFT: 75px; WIDTH: 400px; TOP: 0px; HEIGHT: 18px">
+			</td>
+	</tr>
+</CENTER>
+ 
+ <CENTER><INPUT  type="button" value="提交"  onclick="tijiao()"></CENTER>
+</BODY>
+</HTML>
